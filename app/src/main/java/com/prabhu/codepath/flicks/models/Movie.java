@@ -55,7 +55,7 @@ public class Movie {
      */
     @JsonProperty("poster_path")
     public String getPosterPath() {
-        return posterPath;
+        return String.format("https://image.tmdb.org/t/p/w342%s",posterPath);
     }
 
     /**
@@ -341,10 +341,10 @@ public class Movie {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Movie{");
-        sb.append("posterPath='").append(posterPath).append('\'');
-        sb.append(", title='").append(title).append('\'');
-        sb.append(", overview='").append(overview).append('\'');
-        sb.append(", id=").append(id);
+        sb.append("posterPath='").append(getPosterPath()).append('\'');
+        sb.append(", title='").append(getTitle()).append('\'');
+        sb.append(", overview='").append(getOverview()).append('\'');
+        sb.append(", id=").append(getId());
         sb.append('}');
         return sb.toString();
     }
