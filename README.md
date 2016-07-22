@@ -34,7 +34,7 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] Used **Recycler View** (http://guides.codepath.com/android/Using-the-RecyclerView) instead of List view to display the data.
+* [X] Used **Recycler View** (http://guides.codepath.com/android/Using-the-RecyclerView) instead of List view to display the data.
 
 ## Video Walkthrough
 
