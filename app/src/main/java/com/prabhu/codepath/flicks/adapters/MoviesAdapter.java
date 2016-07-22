@@ -1,6 +1,7 @@
 package com.prabhu.codepath.flicks.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,10 +55,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        int imageWidth;
+        final int orientation = mContext.getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+            imageWidth = 780;
+        }else {
+            imageWidth = 342;
+        }
         Movie movie = mMovieList.get(position);
         holder.tvMovieTitle.setText(movie.getTitle());
         holder.tvMovieOverview.setText(movie.getOverview());
-        final String movieImageUri = movie.getPosterPath();
+        final String movieImageUri = String.format("https://image.tmdb.org/t/p/w%d%s",
+                imageWidth,
+                movie.getPosterPath());
         Picasso.with(mContext).load(movieImageUri).into(holder.ivMovieImage);
     }
 

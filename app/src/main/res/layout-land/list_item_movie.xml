@@ -5,11 +5,11 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="114dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:id="@+id/ivMovieImage"
-        tools:src="@mipmap/ic_launcher"
         android:scaleType="centerCrop"
+        tools:src="@mipmap/ic_launcher"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

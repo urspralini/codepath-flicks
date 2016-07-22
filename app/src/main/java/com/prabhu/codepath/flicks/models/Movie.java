@@ -55,7 +55,7 @@ public class Movie {
      */
     @JsonProperty("poster_path")
     public String getPosterPath() {
-        return String.format("https://image.tmdb.org/t/p/w342%s",posterPath);
+        return posterPath;
     }
 
     /**
