@@ -68,7 +68,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         final String movieImageUri = String.format("https://image.tmdb.org/t/p/w%d%s",
                 imageWidth,
                 movie.getPosterPath());
-        Picasso.with(mContext).load(movieImageUri).into(holder.ivMovieImage);
+        Picasso.with(mContext).load(movieImageUri)
+                .placeholder(R.drawable.place_holder)
+                .error(R.drawable.placeholder_error_image)
+                .into(holder.ivMovieImage);
     }
 
     @Override
