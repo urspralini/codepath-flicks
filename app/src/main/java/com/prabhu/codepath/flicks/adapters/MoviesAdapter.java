@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.prabhu.codepath.flicks.R;
 import com.prabhu.codepath.flicks.models.Movie;
+import com.prabhu.codepath.flicks.viewholders.PopularMovieViewHolder;
+import com.prabhu.codepath.flicks.viewholders.RegularMovieViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,8 +18,11 @@ import java.util.List;
 /**
  * Created by pbabu on 7/20/16.
  */
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final double MOVIE_POPULARITY_CONSTANT = 5.0;
+    public static final int BACKDROP_IMAGE_WIDTH = 780;
+    public static final int POTRAIT_IMAGE_WIDTH = 342;
     private final List<Movie> mMovieList;
     private final Context mContext;
 
@@ -28,50 +31,67 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         this.mMovieList = mMovieList;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ImageView ivMovieImage;
-        public TextView tvMovieTitle;
-        public TextView tvMovieOverview;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ivMovieImage = (ImageView)itemView.findViewById(R.id.ivMovieImage);
-            tvMovieTitle = (TextView)itemView.findViewById(R.id.tvMovieTitle);
-            tvMovieOverview = (TextView)itemView.findViewById(R.id.tvMovieOverview);
-        }
-
-
+    public enum ViewHolderType {
+        POPULAR,
+        REGULAR
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
+        Movie movie = mMovieList.get(position);
+        if(movie.getVoteAverage() > MOVIE_POPULARITY_CONSTANT) {
+            return ViewHolderType.POPULAR.ordinal();
+        }else {
+            //regular movie
+            return ViewHolderType.REGULAR.ordinal();
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View itemMovieView = layoutInflater.inflate(R.layout.list_item_movie, parent, false);
-        ViewHolder viewHolder = new ViewHolder(itemMovieView);
+        View itemMovieView;
+        RecyclerView.ViewHolder viewHolder;
+        if(viewType == ViewHolderType.POPULAR.ordinal()) {
+            itemMovieView = layoutInflater.inflate(R.layout.list_item_popular_movie, parent, false);
+            viewHolder = new PopularMovieViewHolder(itemMovieView);
+        }else {
+            itemMovieView = layoutInflater.inflate(R.layout.list_item_movie, parent, false);
+            viewHolder = new RegularMovieViewHolder(itemMovieView);
+        }
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int imageWidth;
         final int orientation = mContext.getResources().getConfiguration().orientation;
-        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-            imageWidth = 780;
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE ||
+                (holder.getItemViewType() == ViewHolderType.POPULAR.ordinal())){
+            imageWidth = BACKDROP_IMAGE_WIDTH;
         }else {
-            imageWidth = 342;
+            imageWidth = POTRAIT_IMAGE_WIDTH;
         }
         Movie movie = mMovieList.get(position);
-        holder.tvMovieTitle.setText(movie.getTitle());
-        holder.tvMovieOverview.setText(movie.getOverview());
         final String movieImageUri = String.format("https://image.tmdb.org/t/p/w%d%s",
                 imageWidth,
                 movie.getPosterPath());
-        Picasso.with(mContext).load(movieImageUri)
-                .placeholder(R.drawable.place_holder)
-                .error(R.drawable.placeholder_error_image)
-                .into(holder.ivMovieImage);
+        if(holder.getItemViewType() == ViewHolderType.POPULAR.ordinal()) {
+            PopularMovieViewHolder popularMovieViewHolder = (PopularMovieViewHolder)holder;
+            Picasso.with(mContext).load(movieImageUri)
+                    .placeholder(R.drawable.place_holder)
+                    .error(R.drawable.placeholder_error_image)
+                    .into(popularMovieViewHolder.ivPopularMovieImage);
+        }else {
+            RegularMovieViewHolder regularMovieViewHolder = (RegularMovieViewHolder)holder;
+            regularMovieViewHolder.tvMovieTitle.setText(movie.getTitle());
+            regularMovieViewHolder.tvMovieOverview.setText(movie.getOverview());
+            Picasso.with(mContext).load(movieImageUri)
+                    .placeholder(R.drawable.place_holder)
+                    .error(R.drawable.placeholder_error_image)
+                    .into(regularMovieViewHolder.ivMovieImage);
+        }
     }
 
     @Override
