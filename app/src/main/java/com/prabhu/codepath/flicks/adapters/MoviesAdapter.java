@@ -23,7 +23,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final double MOVIE_POPULARITY_CONSTANT = 5.0;
-    public static final int BACKDROP_IMAGE_WIDTH = 780;
+    public static final int BACKDROP_IMAGE_WIDTH = 1280;
     public static final int POTRAIT_IMAGE_WIDTH = 342;
     private final List<Movie> mMovieList;
     private final Context mContext;
@@ -68,17 +68,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int imageWidth;
+        String imagePathSuffix;
+        Movie movie = mMovieList.get(position);
         final int orientation = mContext.getResources().getConfiguration().orientation;
         if(orientation == Configuration.ORIENTATION_LANDSCAPE ||
                 (holder.getItemViewType() == ViewHolderType.POPULAR.ordinal())){
             imageWidth = BACKDROP_IMAGE_WIDTH;
+            imagePathSuffix = movie.getBackdropPath();
         }else {
             imageWidth = POTRAIT_IMAGE_WIDTH;
+            imagePathSuffix = movie.getPosterPath();
         }
-        Movie movie = mMovieList.get(position);
         final String movieImageUri = String.format("https://image.tmdb.org/t/p/w%d%s",
                 imageWidth,
-                movie.getPosterPath());
+                imagePathSuffix);
         if(holder.getItemViewType() == ViewHolderType.POPULAR.ordinal()) {
             PopularMovieViewHolder popularMovieViewHolder = (PopularMovieViewHolder)holder;
             Picasso.with(mContext).load(movieImageUri)
