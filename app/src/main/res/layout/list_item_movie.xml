@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
+    android:background="@color/black"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -23,6 +24,7 @@
         tools:text="The Legend of Tarzan"
         android:id="@+id/tvMovieTitle"
         android:layout_alignParentTop="true"
+        android:textColor="@color/white"
         android:layout_toRightOf="@+id/ivMovieImage"
         android:layout_toEndOf="@+id/ivMovieImage" />
 
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         tools:text="Tarzan, having acclimated to life in London, is called back to his former home in the jungle to investigate the activities at a mining encampment."
         android:id="@+id/tvMovieOverview"
+        android:textColor="@color/grey"
         android:layout_below="@+id/tvMovieTitle"
         android:layout_toRightOf="@+id/ivMovieImage"
         android:layout_toEndOf="@+id/ivMovieImage" />
