@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by pbabu on 7/20/16.
  */
@@ -80,6 +82,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if(holder.getItemViewType() == ViewHolderType.POPULAR.ordinal()) {
             PopularMovieViewHolder popularMovieViewHolder = (PopularMovieViewHolder)holder;
             Picasso.with(mContext).load(movieImageUri)
+                    .transform(new RoundedCornersTransformation(10,10))
                     .placeholder(R.drawable.place_holder)
                     .error(R.drawable.placeholder_error_image)
                     .into(popularMovieViewHolder.ivPopularMovieImage);
@@ -88,6 +91,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             regularMovieViewHolder.tvMovieTitle.setText(movie.getTitle());
             regularMovieViewHolder.tvMovieOverview.setText(movie.getOverview());
             Picasso.with(mContext).load(movieImageUri)
+                    .transform(new RoundedCornersTransformation(10,10))
                     .placeholder(R.drawable.place_holder)
                     .error(R.drawable.placeholder_error_image)
                     .into(regularMovieViewHolder.ivMovieImage);
