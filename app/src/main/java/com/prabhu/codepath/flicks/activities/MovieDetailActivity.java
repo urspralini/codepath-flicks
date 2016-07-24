@@ -63,8 +63,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void populateUIFromModel(DetailMovie detailMovie) {
         mTvMovieTitle.setText(detailMovie.getTitle());
-        mTvMovieReleaseDate.setText(detailMovie.getReleaseDate());
+        mTvMovieReleaseDate.setText("Release Date:" + detailMovie.getReleaseDate());
         mTvMovieOverview.setText(detailMovie.getOverview());
+        mRBMovie.setRating(3.5f);
         final String movieImageUri = String.format("https://image.tmdb.org/t/p/w%d%s",
                 MoviesAdapter.BACKDROP_IMAGE_WIDTH,
                 detailMovie.getBackdropPath());
