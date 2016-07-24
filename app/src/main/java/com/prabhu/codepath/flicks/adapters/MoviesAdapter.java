@@ -27,6 +27,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int POTRAIT_IMAGE_WIDTH = 342;
     private final List<Movie> mMovieList;
     private final Context mContext;
+    private OnItemClickListener listener;
 
     public MoviesAdapter(Context mContext, List<Movie> mMovieList) {
         this.mContext = mContext;
@@ -36,6 +37,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public enum ViewHolderType {
         POPULAR,
         REGULAR
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Movie movie);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View itemMovieView;
-        RecyclerView.ViewHolder viewHolder;
+        final RecyclerView.ViewHolder viewHolder;
         if(viewType == ViewHolderType.POPULAR.ordinal()) {
             itemMovieView = layoutInflater.inflate(R.layout.list_item_popular_movie, parent, false);
             viewHolder = new PopularMovieViewHolder(itemMovieView);
@@ -62,6 +71,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemMovieView = layoutInflater.inflate(R.layout.list_item_movie, parent, false);
             viewHolder = new RegularMovieViewHolder(itemMovieView);
         }
+        itemMovieView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if(listener != null) {
+                    final int position = viewHolder.getLayoutPosition();
+                    final Movie movie = mMovieList.get(position);
+                    listener.onItemClick(movie);
+                }
+            }
+        });
         return viewHolder;
     }
 

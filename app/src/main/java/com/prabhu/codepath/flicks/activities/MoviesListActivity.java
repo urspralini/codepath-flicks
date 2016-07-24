@@ -1,5 +1,6 @@
 package com.prabhu.codepath.flicks.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MoviesListActivity extends AppCompatActivity {
+public class MoviesListActivity extends AppCompatActivity implements MoviesAdapter.OnItemClickListener {
     private List<Movie> movies;
     private MoviesAdapter moviesAdapter;
     private SwipeRefreshLayout swipeContainer;
@@ -47,6 +48,7 @@ public class MoviesListActivity extends AppCompatActivity {
         //call the movies database api for the first time
         fetchMovies(1);
         rvMovies.setAdapter(moviesAdapter);
+        moviesAdapter.setOnItemClickListener(this);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvMovies.setLayoutManager(linearLayoutManager);
         RecyclerView.ItemDecoration itemDecoration = new
@@ -78,5 +80,13 @@ public class MoviesListActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onItemClick(Movie movie) {
+        final Integer movieId = movie.getId();
+        Intent detailIntent = new Intent(this, MovieDetailActivity.class);
+        detailIntent.putExtra(MovieDetailActivity.MOVIE_ID_KEY, movieId);
+        startActivity(detailIntent);
     }
 }
