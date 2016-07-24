@@ -51,6 +51,7 @@
         android:layout_marginTop="16dp"
         android:layout_below="@+id/tvMovieReleaseDate"
         android:layout_alignParentLeft="true"
+        android:visibility="invisible"
         android:layout_alignParentStart="true" />
 
     <TextView

@@ -1,6 +1,7 @@
 package com.prabhu.codepath.flicks.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -63,15 +64,7 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
 
     }
 
-    private void populateUIFromModel(DetailMovie detailMovie) {
-        mTvMovieTitle.setText(detailMovie.getTitle());
-        mTvMovieReleaseDate.setText("Release Date:" + detailMovie.getReleaseDate());
-        mTvMovieOverview.setText(detailMovie.getOverview());
-        if(detailMovie.getVoteAverage() >= 5.0){
-            mRBMovie.setRating(5.0f);
-        }else {
-            mRBMovie.setRating(detailMovie.getVoteAverage().floatValue());
-        }
+    private void populateUIFromModel(final DetailMovie detailMovie) {
         final Call<MovieTrailerResponse> movieTrailersCall = MOVIE_DB_SERVICE.getMovieTrailers(detailMovie.getId());
         movieTrailersCall.enqueue(new Callback<MovieTrailerResponse>() {
             @Override
@@ -85,6 +78,16 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                         youTubePlayer.cueVideos(youtubeMovieIds);
+                        //populate other UIs
+                        mTvMovieTitle.setText(detailMovie.getTitle());
+                        mTvMovieReleaseDate.setText("Release Date:" + detailMovie.getReleaseDate());
+                        mTvMovieOverview.setText(detailMovie.getOverview());
+                        if(detailMovie.getVoteAverage() >= 5.0){
+                            mRBMovie.setRating(5.0f);
+                        }else {
+                            mRBMovie.setRating(detailMovie.getVoteAverage().floatValue());
+                        }
+                        mRBMovie.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -99,5 +102,6 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
 
             }
         });
+
     }
 }
