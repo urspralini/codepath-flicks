@@ -24,7 +24,7 @@ public class VideoViewerActivity extends YouTubeBaseActivity {
         youTubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.cueVideos(youtubeMovieIds);
+                youTubePlayer.loadVideos(youtubeMovieIds);
             }
 
             @Override
