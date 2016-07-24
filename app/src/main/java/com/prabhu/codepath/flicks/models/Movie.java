@@ -16,7 +16,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
-
+    private static final double MOVIE_POPULARITY_CONSTANT = 5.0;
     @JsonProperty("poster_path")
     private String posterPath;
     @JsonProperty("adult")
@@ -347,5 +347,9 @@ public class Movie {
         sb.append(", id=").append(getId());
         sb.append('}');
         return sb.toString();
+    }
+
+    public boolean isPopular(){
+        return getVoteAverage() > MOVIE_POPULARITY_CONSTANT;
     }
 }
