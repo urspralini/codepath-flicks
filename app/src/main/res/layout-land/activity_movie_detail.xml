@@ -10,14 +10,12 @@
         android:padding="16dp"
         android:background="@color/black">
 
-        <ImageView
+        <com.google.android.youtube.player.YouTubePlayerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ivDetailMovieImage"
-            tools:src="@mipmap/ic_launcher"
+            android:id="@+id/playerDetailMovie"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/tvDetailMovieTitle"
-            android:layout_alignStart="@+id/tvDetailMovieTitle"
+            android:layout_alignParentLeft="true"
             />
 
         <TextView
@@ -28,7 +26,7 @@
             tools:text="The Legend of Tarzan"
             android:id="@+id/tvDetailMovieTitle"
             android:textColor="@color/white"
-            android:layout_below="@+id/ivDetailMovieImage"
+            android:layout_below="@+id/playerDetailMovie"
             android:layout_alignLeft="@+id/tvMovieReleaseDate"
             android:layout_alignStart="@+id/tvMovieReleaseDate" />
 
