@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.prabhu.codepath.flicks.activities.MovieDetailActivity">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -26,6 +27,7 @@
             tools:text="The Legend of Tarzan"
             android:id="@+id/tvDetailMovieTitle"
             android:textColor="@color/white"
+            android:textSize="18sp"
             android:layout_below="@+id/playerDetailMovie"
             android:layout_alignLeft="@+id/tvMovieReleaseDate"
             android:layout_alignStart="@+id/tvMovieReleaseDate" />
@@ -36,7 +38,8 @@
             android:layout_height="wrap_content"
             tools:text="Release Date:2016-04-07"
             android:id="@+id/tvMovieReleaseDate"
-            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
             android:layout_below="@+id/tvDetailMovieTitle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -50,7 +53,7 @@
             android:stepSize="0.5"
             android:theme="@style/RatingBar"
             android:isIndicator="true"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_below="@+id/tvMovieReleaseDate"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -62,6 +65,7 @@
             android:id="@+id/tvDetailMovieOverview"
             android:textColor="@color/grey"
             android:layout_marginTop="16dp"
+            android:textSize="12sp"
             android:layout_below="@+id/rbDetailMovie"
             android:layout_alignLeft="@+id/rbDetailMovie"
             android:layout_alignStart="@+id/rbDetailMovie" />
