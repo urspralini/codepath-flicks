@@ -103,7 +103,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             PopularMovieViewHolder popularMovieViewHolder = (PopularMovieViewHolder)holder;
             Picasso.with(mContext).load(movieImageUri)
                     .transform(new RoundedCornersTransformation(10,10))
-                    .placeholder(R.drawable.place_holder)
+                    .placeholder(R.drawable.video_placeholder)
                     .error(R.drawable.placeholder_error_image)
                     .into(popularMovieViewHolder.ivPopularMovieImage);
         }else {
@@ -112,7 +112,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             regularMovieViewHolder.tvMovieOverview.setText(movie.getOverview());
             Picasso.with(mContext).load(movieImageUri)
                     .transform(new RoundedCornersTransformation(10,10))
-                    .placeholder(R.drawable.place_holder)
+                    .placeholder(R.drawable.image_placeholder)
                     .error(R.drawable.placeholder_error_image)
                     .into(regularMovieViewHolder.ivMovieImage);
         }
