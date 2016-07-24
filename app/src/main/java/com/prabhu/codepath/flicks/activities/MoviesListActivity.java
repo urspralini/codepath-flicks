@@ -13,7 +13,10 @@ import com.prabhu.codepath.flicks.components.DividerItemDecoration;
 import com.prabhu.codepath.flicks.listeners.EndlessRecyclerViewScrollListener;
 import com.prabhu.codepath.flicks.models.Movie;
 import com.prabhu.codepath.flicks.models.MovieDBApiResponse;
+import com.prabhu.codepath.flicks.models.MovieTrailerResponse;
+import com.prabhu.codepath.flicks.models.Youtube;
 import com.prabhu.codepath.flicks.rest.MovieDBClient;
+import com.prabhu.codepath.flicks.rest.MovieDBService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MoviesListActivity extends AppCompatActivity implements MoviesAdapter.OnItemClickListener {
+    public static final MovieDBService MOVIE_DB_SERVICE = MovieDBClient.getInstance()
+            .getMovieDBService();
     private List<Movie> movies;
     private MoviesAdapter moviesAdapter;
     private SwipeRefreshLayout swipeContainer;
@@ -64,8 +69,7 @@ public class MoviesListActivity extends AppCompatActivity implements MoviesAdapt
 
 
     public void fetchMovies(int page){
-        Call<MovieDBApiResponse> nowPlayingMoviesCall = MovieDBClient.getInstance()
-                .getMovieDBService()
+        Call<MovieDBApiResponse> nowPlayingMoviesCall = MOVIE_DB_SERVICE
                 .getNowPlayingMovies(page);
         nowPlayingMoviesCall.enqueue(new Callback<MovieDBApiResponse>() {
             @Override
@@ -84,9 +88,37 @@ public class MoviesListActivity extends AppCompatActivity implements MoviesAdapt
 
     @Override
     public void onItemClick(Movie movie) {
-        final Integer movieId = movie.getId();
-        Intent detailIntent = new Intent(this, MovieDetailActivity.class);
-        detailIntent.putExtra(MovieDetailActivity.MOVIE_ID_KEY, movieId);
-        startActivity(detailIntent);
+
+        if(movie.isPopular()){
+            //go to video viewer activity
+            final Call<MovieTrailerResponse> movieTrailersCall = MOVIE_DB_SERVICE.getMovieTrailers(movie.getId());
+            movieTrailersCall.enqueue(new Callback<MovieTrailerResponse>() {
+                @Override
+                public void onResponse(Call<MovieTrailerResponse> call, Response<MovieTrailerResponse> response) {
+                    MovieTrailerResponse movieTrailerResponse = response.body();
+                    ArrayList<String> youtubeMovieIds = new ArrayList<>();
+                    for(Youtube youtube : movieTrailerResponse.getYoutube()) {
+                        youtubeMovieIds.add(youtube.getSource());
+                    }
+                    Intent videoViewerIntent = new Intent(MoviesListActivity.this,
+                            VideoViewerActivity.class);
+                    videoViewerIntent.putStringArrayListExtra(VideoViewerActivity.YOUTUBE_MOVIE_KEYS,
+                            youtubeMovieIds);
+                    startActivity(videoViewerIntent);
+                }
+
+                @Override
+                public void onFailure(Call<MovieTrailerResponse> call, Throwable t) {
+
+                }
+            });
+        } else {
+            //go to detail activity
+            final Integer movieId = movie.getId();
+            Intent detailIntent = new Intent(this, MovieDetailActivity.class);
+            detailIntent.putExtra(MovieDetailActivity.MOVIE_ID_KEY, movieId);
+            startActivity(detailIntent);
+        }
+
     }
 }

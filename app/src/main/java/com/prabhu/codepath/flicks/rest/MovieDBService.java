@@ -2,6 +2,7 @@ package com.prabhu.codepath.flicks.rest;
 
 import com.prabhu.codepath.flicks.models.DetailMovie;
 import com.prabhu.codepath.flicks.models.MovieDBApiResponse;
+import com.prabhu.codepath.flicks.models.MovieTrailerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -27,4 +28,7 @@ public interface MovieDBService {
 
     @GET("3/movie/{id}?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")
     Call<DetailMovie> getMovie(@Path("id") int movieId);
+
+    @GET("3/movie/{id}/trailers?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")
+    Call<MovieTrailerResponse> getMovieTrailers(@Path("id") int movieId);
 }

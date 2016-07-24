@@ -21,8 +21,6 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
  * Created by pbabu on 7/20/16.
  */
 public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    public static final double MOVIE_POPULARITY_CONSTANT = 5.0;
     public static final int BACKDROP_IMAGE_WIDTH = 1280;
     public static final int POTRAIT_IMAGE_WIDTH = 342;
     private final List<Movie> mMovieList;
@@ -50,7 +48,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemViewType(int position) {
         Movie movie = mMovieList.get(position);
-        if(movie.getVoteAverage() > MOVIE_POPULARITY_CONSTANT) {
+        if(movie.isPopular()) {
             return ViewHolderType.POPULAR.ordinal();
         }else {
             //regular movie
