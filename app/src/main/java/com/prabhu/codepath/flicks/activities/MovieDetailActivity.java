@@ -65,7 +65,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         mTvMovieTitle.setText(detailMovie.getTitle());
         mTvMovieReleaseDate.setText("Release Date:" + detailMovie.getReleaseDate());
         mTvMovieOverview.setText(detailMovie.getOverview());
-        mRBMovie.setRating(3.5f);
+        if(detailMovie.getVoteAverage() >= 5.0){
+            mRBMovie.setRating(5.0f);
+        }else {
+            mRBMovie.setRating(detailMovie.getVoteAverage().floatValue());
+        }
         final String movieImageUri = String.format("https://image.tmdb.org/t/p/w%d%s",
                 MoviesAdapter.BACKDROP_IMAGE_WIDTH,
                 detailMovie.getBackdropPath());
