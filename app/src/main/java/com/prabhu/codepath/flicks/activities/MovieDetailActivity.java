@@ -46,6 +46,8 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
         final Movie movie = getIntent().getParcelableExtra(MOVIE_KEY);
         ButterKnife.bind(this);
         final DetailMovie detailMovie = buildDetailMovieFrom(movie);
+        populateUIFromModel(detailMovie);
+        //calling movie database api to get any latest data in the background
         fetchMovie(detailMovie.getId());
     }
 
