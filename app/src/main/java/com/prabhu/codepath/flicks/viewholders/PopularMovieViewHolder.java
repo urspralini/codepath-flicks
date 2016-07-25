@@ -12,10 +12,12 @@ import com.prabhu.codepath.flicks.R;
 public class PopularMovieViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView ivPopularMovieImage;
+    public ImageView icPlayIcon;
 
     public PopularMovieViewHolder(View itemView) {
         super(itemView);
         ivPopularMovieImage = (ImageView)itemView.findViewById(R.id.ivPopularMovieImage);
+        icPlayIcon = (ImageView)itemView.findViewById(R.id.ic_play_icon);
     }
 
 }

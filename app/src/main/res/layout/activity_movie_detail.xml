@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/backgorund_green"
     android:padding="16dp"
     tools:context="com.prabhu.codepath.flicks.activities.MovieDetailActivity">
 
@@ -22,7 +22,7 @@
         android:textSize="18sp"
         tools:text="The Legend of Tarzan"
         android:id="@+id/tvDetailMovieTitle"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_below="@+id/playerDetailMovie"
         android:layout_alignLeft="@+id/tvMovieReleaseDate"
         android:layout_alignStart="@+id/tvMovieReleaseDate" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         tools:text="Release Date:2016-04-07"
         android:id="@+id/tvMovieReleaseDate"
-        android:textColor="@color/grey"
+        android:textColor="@color/black"
         android:layout_below="@+id/tvDetailMovieTitle"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         tools:text="Tarzan, having acclimated to life in London, is called back to his former home in the jungle to investigate the activities at a mining encampment."
         android:id="@+id/tvDetailMovieOverview"
-        android:textColor="@color/grey"
+        android:textColor="@color/black"
         android:textSize="12sp"
         android:layout_marginTop="16dp"
         android:layout_below="@+id/rbDetailMovie"
