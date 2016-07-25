@@ -18,6 +18,8 @@ import com.prabhu.codepath.flicks.rest.MovieDBService;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,21 +28,22 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
     public static final MovieDBService MOVIE_DB_SERVICE = MovieDBClient.getInstance()
             .getMovieDBService();
     public static final String MOVIE_ID_KEY = "movieId";
-    private TextView mTvMovieTitle;
-    private TextView mTvMovieReleaseDate;
-    private TextView mTvMovieOverview;
-    private RatingBar mRBMovie;
-    private YouTubePlayerView youTubePlayerView;
+    @BindView(R.id.tvDetailMovieTitle)
+    TextView mTvMovieTitle;
+    @BindView(R.id.tvMovieReleaseDate)
+    TextView mTvMovieReleaseDate;
+    @BindView(R.id.tvDetailMovieOverview)
+    TextView mTvMovieOverview;
+    @BindView(R.id.rbDetailMovie)
+    RatingBar mRBMovie;
+    @BindView(R.id.playerDetailMovie)
+    YouTubePlayerView youTubePlayerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         final int movieId = getIntent().getIntExtra(MOVIE_ID_KEY, -1);
-        mTvMovieTitle = (TextView)findViewById(R.id.tvDetailMovieTitle);
-        mTvMovieReleaseDate = (TextView)findViewById(R.id.tvMovieReleaseDate);
-        mTvMovieOverview = (TextView)findViewById(R.id.tvDetailMovieOverview);
-        mRBMovie = (RatingBar)findViewById(R.id.rbDetailMovie);
-        youTubePlayerView = (YouTubePlayerView)findViewById(R.id.playerDetailMovie);
+        ButterKnife.bind(this);
         fetchMovie(movieId);
     }
 
