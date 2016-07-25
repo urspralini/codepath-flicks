@@ -11,6 +11,7 @@ import com.prabhu.codepath.flicks.R;
 import com.prabhu.codepath.flicks.models.Movie;
 import com.prabhu.codepath.flicks.viewholders.PopularMovieViewHolder;
 import com.prabhu.codepath.flicks.viewholders.RegularMovieViewHolder;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -100,12 +101,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 imageWidth,
                 imagePathSuffix);
         if(holder.getItemViewType() == ViewHolderType.POPULAR.ordinal()) {
-            PopularMovieViewHolder popularMovieViewHolder = (PopularMovieViewHolder)holder;
+            final PopularMovieViewHolder popularMovieViewHolder = (PopularMovieViewHolder)holder;
+            popularMovieViewHolder.icPlayIcon.setVisibility(View.INVISIBLE);
             Picasso.with(mContext).load(movieImageUri)
                     .transform(new RoundedCornersTransformation(10,10))
                     .placeholder(R.drawable.video_placeholder)
                     .error(R.drawable.placeholder_error_image)
-                    .into(popularMovieViewHolder.ivPopularMovieImage);
+                    .into(popularMovieViewHolder.ivPopularMovieImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            popularMovieViewHolder.icPlayIcon.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            popularMovieViewHolder.icPlayIcon.setVisibility(View.INVISIBLE);
+                        }
+                    });
         }else {
             RegularMovieViewHolder regularMovieViewHolder = (RegularMovieViewHolder)holder;
             regularMovieViewHolder.tvMovieTitle.setText(movie.getTitle());

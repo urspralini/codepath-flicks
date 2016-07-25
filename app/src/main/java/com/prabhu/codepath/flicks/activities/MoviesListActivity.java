@@ -74,7 +74,6 @@ public class MoviesListActivity extends AppCompatActivity implements MoviesAdapt
         nowPlayingMoviesCall.enqueue(new Callback<MovieDBApiResponse>() {
             @Override
             public void onResponse(Call<MovieDBApiResponse> call, Response<MovieDBApiResponse> response) {
-                //moviesAdapter.clear();
                 moviesAdapter.addAll(response.body().getResults());
                 swipeContainer.setRefreshing(false);
             }

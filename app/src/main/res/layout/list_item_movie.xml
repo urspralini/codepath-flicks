@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:background="@color/black"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -33,7 +32,7 @@
             android:id="@+id/tvMovieTitle"
             android:layout_alignParentTop="true"
             android:gravity="center_horizontal"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +40,7 @@
             tools:text="Tarzan, having acclimated to life in London, is called back to his former home in the jungle to investigate the activities at a mining encampment."
             android:id="@+id/tvMovieOverview"
             android:gravity="center_horizontal"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
             android:textSize="10sp"
             />
     </LinearLayout>
