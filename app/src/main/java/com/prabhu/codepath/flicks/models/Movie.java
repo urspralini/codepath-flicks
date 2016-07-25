@@ -1,6 +1,9 @@
 
 package com.prabhu.codepath.flicks.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +18,7 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Movie {
+public class Movie implements Parcelable {
     private static final double MOVIE_POPULARITY_CONSTANT = 5.0;
     @JsonProperty("poster_path")
     private String posterPath;
@@ -352,4 +355,46 @@ public class Movie {
     public boolean isPopular(){
         return getVoteAverage() > MOVIE_POPULARITY_CONSTANT;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.posterPath);
+        dest.writeString(this.overview);
+        dest.writeString(this.releaseDate);
+        dest.writeValue(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.backdropPath);
+        dest.writeValue(this.voteAverage);
+    }
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        this.posterPath = in.readString();
+        this.overview = in.readString();
+        this.releaseDate = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.title = in.readString();
+        this.backdropPath = in.readString();
+        this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

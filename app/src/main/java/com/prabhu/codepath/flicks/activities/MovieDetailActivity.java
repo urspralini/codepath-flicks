@@ -11,6 +11,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.prabhu.codepath.flicks.R;
 import com.prabhu.codepath.flicks.models.DetailMovie;
+import com.prabhu.codepath.flicks.models.Movie;
 import com.prabhu.codepath.flicks.models.MovieTrailerResponse;
 import com.prabhu.codepath.flicks.models.Youtube;
 import com.prabhu.codepath.flicks.rest.MovieDBClient;
@@ -27,7 +28,7 @@ import retrofit2.Response;
 public class MovieDetailActivity extends YouTubeBaseActivity {
     public static final MovieDBService MOVIE_DB_SERVICE = MovieDBClient.getInstance()
             .getMovieDBService();
-    public static final String MOVIE_ID_KEY = "movieId";
+    public static final String MOVIE_KEY = "movieData";
     @BindView(R.id.tvDetailMovieTitle)
     TextView mTvMovieTitle;
     @BindView(R.id.tvMovieReleaseDate)
@@ -42,11 +43,23 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        final int movieId = getIntent().getIntExtra(MOVIE_ID_KEY, -1);
+        final Movie movie = getIntent().getParcelableExtra(MOVIE_KEY);
         ButterKnife.bind(this);
-        fetchMovie(movieId);
+        final DetailMovie detailMovie = buildDetailMovieFrom(movie);
+        populateUIFromModel(detailMovie);
+        //calling movie database api to get any latest data in the background
+        fetchMovie(detailMovie.getId());
     }
 
+    private DetailMovie buildDetailMovieFrom(Movie movie){
+        DetailMovie detailMovie = new DetailMovie();
+        detailMovie.setTitle(movie.getTitle());
+        detailMovie.setId(movie.getId());
+        detailMovie.setOverview(movie.getOverview());
+        detailMovie.setReleaseDate(movie.getReleaseDate());
+        detailMovie.setVoteAverage(movie.getVoteAverage());
+        return detailMovie;
+    }
 
     public void fetchMovie(int movieId) {
         Call<DetailMovie> detailMovieCall = MovieDBClient.getInstance()
