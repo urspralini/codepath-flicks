@@ -113,9 +113,8 @@ public class MoviesListActivity extends AppCompatActivity implements MoviesAdapt
             });
         } else {
             //go to detail activity
-            final Integer movieId = movie.getId();
             Intent detailIntent = new Intent(this, MovieDetailActivity.class);
-            detailIntent.putExtra(MovieDetailActivity.MOVIE_ID_KEY, movieId);
+            detailIntent.putExtra(MovieDetailActivity.MOVIE_KEY, movie);
             startActivity(detailIntent);
         }
 
